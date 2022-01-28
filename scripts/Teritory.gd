@@ -32,6 +32,37 @@ func _ready():
 #	pass
 
 
+func _input(_input_event):
+	if Input.is_key_pressed(KEY_QUOTELEFT):
+		for label in _tile_map.get_children():
+			label.hide()
+
+	elif Input.is_key_pressed(KEY_1):
+		for i in _tiles.size():
+			_tile_map.get_children()[i].show()
+			_tile_map.get_children()[i].text = "Food: " + str(stepify(_tiles[i].food, 0.01))
+
+	elif Input.is_key_pressed(KEY_2):
+		for i in _tiles.size():
+			_tile_map.get_children()[i].show()
+			_tile_map.get_children()[i].text = "Wood: " + str(stepify(_tiles[i].wood, 0.01))
+
+	elif Input.is_key_pressed(KEY_3):
+		for i in _tiles.size():
+			_tile_map.get_children()[i].show()
+			_tile_map.get_children()[i].text = "Energy: " + str(stepify(_tiles[i].energy, 0.01))
+
+	elif Input.is_key_pressed(KEY_4):
+		for i in _tiles.size():
+			_tile_map.get_children()[i].show()
+			_tile_map.get_children()[i].text = "Iron: " + str(stepify(_tiles[i].iron, 0.01))
+
+	elif Input.is_key_pressed(KEY_5):
+		for i in _tiles.size():
+			_tile_map.get_children()[i].show()
+			_tile_map.get_children()[i].text = "Endurium: " + str(stepify(_tiles[i].endurium, 0.01))
+
+
 func init_noise() -> void:
 	_food_distribution = OpenSimplexNoise.new()
 	_food_distribution.seed = _rng.randi()
@@ -76,17 +107,18 @@ func generate() -> void:
 	emit_signal("started")
 	_generate_landscape()
 	_set_landscape()
+	_set_labels()
 	emit_signal("finished")
 
 
 func _generate_landscape() -> void:
 	for x in range(0, size.x):
 		for y in range(0, size.y):
-			var food := (_food_distribution.get_noise_2d(x, y) + 1) / 2
-			var wood := (_wood_distribution.get_noise_2d(x, y) + 1) / 2
-			var energy := (_energy_distribution.get_noise_2d(x, y) + 1) / 2
-			var iron := (_iron_distribution.get_noise_2d(x, y) + 1) / 2
-			var endurium := (_endurium_distribution.get_noise_2d(x, y) + 1) / 2
+			var food := (_food_distribution.get_noise_2d(x + 1, y + 1) + 1) / 2
+			var wood := (_wood_distribution.get_noise_2d(x + 1, y + 1) + 1) / 2
+			var energy := (_energy_distribution.get_noise_2d(x + 1, y + 1) + 1) / 2
+			var iron := (_iron_distribution.get_noise_2d(x + 1, y + 1) + 1) / 2
+			var endurium := (_endurium_distribution.get_noise_2d(x + 1, y + 1) + 1) / 2
 
 			var type: int
 			var tile_params := [food, wood, energy, iron, endurium]
@@ -102,19 +134,20 @@ func _generate_landscape() -> void:
 
 func _set_landscape() -> void:
 	for tile in _tiles:
-		var tile_params := [tile.food, tile.wood, tile.energy, tile.iron, tile.endurium]
+		_tile_map.set_cell(tile.x, tile.y, tile.type)
 
-		var tile_label = Label.new()
-		_tile_map.add_child(tile_label)
-		tile_label.text = str(tile_params.max())
 
-		var tile_label_width = tile_label.get_minimum_size().x
-		var tile_label_height = tile_label.get_minimum_size().y
-		tile_label.set_position(
+func _set_labels() -> void:
+	for tile in _tiles:
+		var label = Label.new()
+		_tile_map.add_child(label)
+		label.text = "Food: " + str(stepify(tile.food, 0.01))
+
+		var label_width = label.get_minimum_size().x
+		var label_height = label.get_minimum_size().y
+		label.set_position(
 			(
 				_tile_map.map_to_world(Vector2(tile.x, tile.y))
-				+ Vector2(-tile_label_width / 2, _tile_map.cell_size.y / 2 - tile_label_height / 2)
+				+ Vector2(-label_width / 2, _tile_map.cell_size.y / 2 - label_height / 2)
 			)
 		)
-
-		_tile_map.set_cell(tile.x, tile.y, tile.type)
