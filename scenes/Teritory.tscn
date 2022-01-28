@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://tilesets/terrain.tres" type="TileSet" id=1]
+[ext_resource path="res://scenes/TeritoryCamera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/Teritory.gd" type="Script" id=4]
+
+[node name="Teritory" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="TeritoryCamera" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, 192 )
+
+[node name="TileMap" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 125, 62 )
+format = 1

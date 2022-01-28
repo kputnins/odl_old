@@ -1,0 +1,5 @@
+# Cached Godot asset imports
+.import
+
+# Krita project backup file
+*.kra~
