@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/rock_125_62.png-4c80671d0417312699dba774c87393a4.stex"
+path="res://.import/transparent_124_62.png-59717f8e1d610ffa1d5ce551e8cef3ed.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/terrain/rock_125_62.png"
-dest_files=[ "res://.import/rock_125_62.png-4c80671d0417312699dba774c87393a4.stex" ]
+source_file="res://assets/terrain/transparent_124_62.png"
+dest_files=[ "res://.import/transparent_124_62.png-59717f8e1d610ffa1d5ce551e8cef3ed.stex" ]
 
 [params]
 

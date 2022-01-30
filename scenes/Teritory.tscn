@@ -13,5 +13,5 @@ position = Vector2( 0, 192 )
 [node name="TileMap" type="TileMap" parent="."]
 mode = 1
 tile_set = ExtResource( 1 )
-cell_size = Vector2( 125, 62 )
+cell_size = Vector2( 124, 62 )
 format = 1
